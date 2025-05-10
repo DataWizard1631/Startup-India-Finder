@@ -1,0 +1,118 @@
+// Mock data for government schemes
+const schemes = [
+  {
+    id: 1,
+    title: "Startup India Seed Fund Scheme",
+    desc: "Financial assistance up to Rs. 5 crore to startups for proof of concept, prototype development, product trials, market entry, and commercialization.",
+    eligibility: "DPIIT-recognized startups less than 2 years old with innovative business models.",
+    deadline: "2025-06-30",
+    sectorTags: ["All Sectors"],
+    region: "All India",
+  },
+  {
+    id: 2,
+    title: "Fund of Funds for Startups",
+    desc: "Rs. 10,000 crore corpus to invest in SEBI-registered Alternative Investment Funds (AIFs) which in turn invest in startups.",
+    eligibility: "DPIIT-recognized startups seeking venture capital investment.",
+    deadline: "2025-12-31",
+    sectorTags: ["All Sectors"],
+    region: "All India",
+  },
+  {
+    id: 3,
+    title: "Credit Guarantee Scheme for Startups",
+    desc: "Collateral-free loans up to Rs. 10 crore with credit guarantee coverage.",
+    eligibility: "DPIIT-recognized startups with viable business models.",
+    deadline: "2025-09-15",
+    sectorTags: ["All Sectors"],
+    region: "All India",
+  },
+  {
+    id: 4,
+    title: "Maharashtra State Innovation Society Grant",
+    desc: "Grants up to Rs. 15 lakh for innovative startups based in Maharashtra.",
+    eligibility: "Startups registered in Maharashtra with innovative products/services.",
+    deadline: "2025-08-20",
+    sectorTags: ["Fintech", "Agritech", "Healthtech"],
+    region: "Maharashtra",
+  },
+  {
+    id: 5,
+    title: "Karnataka Elevate Program",
+    desc: "Funding support up to Rs. 50 lakh for startups in Karnataka.",
+    eligibility: "Technology startups registered in Karnataka.",
+    deadline: "2025-07-10",
+    sectorTags: ["AI/ML", "IoT", "SaaS"],
+    region: "Karnataka",
+  },
+  {
+    id: 6,
+    title: "Biotechnology Ignition Grant (BIG)",
+    desc: "Grants up to Rs. 50 lakh for biotech startups for proof of concept and early-stage validation.",
+    eligibility: "Early-stage biotech startups and entrepreneurs.",
+    deadline: "2025-05-15",
+    sectorTags: ["Biotech", "Healthtech"],
+    region: "All India",
+  },
+  {
+    id: 7,
+    title: "Atal Innovation Mission (AIM)",
+    desc: "Grants and support for innovation and entrepreneurship in various sectors.",
+    eligibility: "Startups with innovative solutions addressing national challenges.",
+    deadline: "2025-10-25",
+    sectorTags: ["Edtech", "Clean Energy", "Agritech"],
+    region: "All India",
+  },
+  {
+    id: 8,
+    title: "Kerala Startup Mission Fund",
+    desc: "Seed funding up to Rs. 25 lakh for startups based in Kerala.",
+    eligibility: "Technology startups registered in Kerala.",
+    deadline: "2025-11-30",
+    sectorTags: ["SaaS", "Fintech", "E-commerce"],
+    region: "Kerala",
+  },
+  {
+    id: 9,
+    title: "Gujarat Startup and Innovation Hub Grant",
+    desc: "Financial assistance up to Rs. 30 lakh for startups in Gujarat.",
+    eligibility: "Startups registered in Gujarat with innovative business models.",
+    deadline: "2025-09-05",
+    sectorTags: ["Manufacturing", "Agritech", "Clean Energy"],
+    region: "Gujarat",
+  },
+  {
+    id: 10,
+    title: "Women Entrepreneurship Platform Grant",
+    desc: "Funding support for women-led startups across India.",
+    eligibility: "Startups with at least 50% women ownership.",
+    deadline: "2025-08-15",
+    sectorTags: ["All Sectors"],
+    region: "All India",
+  },
+  {
+    id: 11,
+    title: "SIDBI MSME Innovation Fund",
+    desc: "Loans and equity support for innovative MSMEs and startups.",
+    eligibility: "MSMEs and startups with innovative products or services.",
+    deadline: "2025-07-20",
+    sectorTags: ["Manufacturing", "SaaS", "Fintech"],
+    region: "All India",
+  },
+  {
+    id: 12,
+    title: "Delhi Startup Policy Reimbursement Scheme",
+    desc: "Reimbursement of various expenses up to Rs. 10 lakh for Delhi-based startups.",
+    eligibility: "Startups registered in Delhi NCR region.",
+    deadline: "2025-06-15",
+    sectorTags: ["All Sectors"],
+    region: "Delhi",
+  },
+]
+
+export async function GET() {
+  // Simulate network delay
+  await new Promise((resolve) => setTimeout(resolve, 800))
+
+  return Response.json(schemes)
+}
