@@ -27,13 +27,26 @@ export default function HackathonsPage() {
 
   useEffect(() => {
     const fetchHackathons = async () => {
+      setLoading(true)
       try {
         const res = await fetch("/api/hackathons")
+        
+        if (!res.ok) {
+          throw new Error(`Failed to fetch: ${res.status} ${res.statusText}`)
+        }
+        
         const data = await res.json()
-        setHackathons(data)
-        setLoading(false)
+        
+        if (Array.isArray(data)) {
+          setHackathons(data)
+        } else {
+          console.error("Invalid hackathons data format:", data)
+          setHackathons([])
+        }
       } catch (error) {
         console.error("Error fetching hackathons:", error)
+        setHackathons([])
+      } finally {
         setLoading(false)
       }
     }
@@ -43,36 +56,60 @@ export default function HackathonsPage() {
 
   // Filter hackathons based on search query and filters
   const filteredHackathons = hackathons.filter((hackathon) => {
+    // Safely check if properties exist to prevent errors
+    if (!hackathon) return false
+    
     // Search query filter
+    const title = hackathon.title || ""
+    const desc = hackathon.desc || ""
+    const sectorTags = hackathon.sectorTags || []
+    
     const matchesSearch =
       searchQuery === "" ||
-      hackathon.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hackathon.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      hackathon.sectorTags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      sectorTags.some((tag) => tag && tag.toLowerCase().includes(searchQuery.toLowerCase()))
 
     // Date filter
     const matchesDate =
-      !filters.date || new Date(hackathon.date).toDateString() === new Date(filters.date).toDateString()
+      !filters.date || 
+      (hackathon.date && new Date(hackathon.date).toDateString() === new Date(filters.date).toDateString())
 
     // Mode filter
-    const matchesMode = filters.mode.length === 0 || filters.mode.includes(hackathon.mode)
+    const matchesMode = 
+      filters.mode.length === 0 || 
+      (hackathon.mode && filters.mode.includes(hackathon.mode))
 
     // Sector filter
     const matchesSector =
-      filters.sector.length === 0 || hackathon.sectorTags.some((tag) => filters.sector.includes(tag))
+      filters.sector.length === 0 || 
+      sectorTags.some((tag) => tag && filters.sector.includes(tag))
 
     // Location filter
-    const matchesLocation = filters.location.length === 0 || filters.location.includes(hackathon.location)
+    const matchesLocation = 
+      filters.location.length === 0 || 
+      (hackathon.location && filters.location.includes(hackathon.location))
 
-    // Organiser filter (assuming organiser is part of the hackathon data)
+    // Organiser filter
     const matchesOrganiser =
-      filters.organiser.length === 0 || (hackathon.organiser && filters.organiser.includes(hackathon.organiser))
+      filters.organiser.length === 0 || 
+      (hackathon.organiser && filters.organiser.includes(hackathon.organiser))
 
     return matchesSearch && matchesDate && matchesMode && matchesSector && matchesLocation && matchesOrganiser
   })
 
   // Sort hackathons by date (upcoming first)
-  const sortedHackathons = [...filteredHackathons].sort((a, b) => new Date(a.date) - new Date(b.date))
+  const sortedHackathons = [...filteredHackathons].sort((a, b) => {
+    // Handle missing dates or invalid date formats
+    const dateA = a.date ? new Date(a.date) : new Date(0)
+    const dateB = b.date ? new Date(b.date) : new Date(0)
+    
+    // Use isNaN to check if the date is valid
+    if (isNaN(dateA.getTime())) return 1
+    if (isNaN(dateB.getTime())) return -1
+    
+    return dateA - dateB
+  })
 
   // Get unique values for filters
   const modes = [...new Set(hackathons.map((h) => h.mode))]

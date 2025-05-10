@@ -57,6 +57,18 @@ export default function HackathonCard({ hackathon }) {
     }
   }
 
+  // Handle opening links with proper URL formatting
+  const openLink = () => {
+    if (!hackathon.link) return
+    
+    // Ensure the URL has proper http/https prefix
+    let url = hackathon.link
+    if (!url.startsWith('http://') && !url.startsWith('https://')) {
+      url = 'https://' + url
+    }
+    window.open(url, '_blank')
+  }
+
   return (
     <Card>
       <CardContent className="p-4">
@@ -89,91 +101,115 @@ export default function HackathonCard({ hackathon }) {
                 {hackathon.mode}
               </div>
             </div>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button variant="outline" size="sm">
-                  View Details
+            
+            <div className="flex gap-2">
+              {hackathon.link && (
+                <Button 
+                  variant="secondary" 
+                  size="sm"
+                  onClick={openLink}
+                >
+                  Website
                 </Button>
-              </DialogTrigger>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>{hackathon.title}</DialogTitle>
-                  <DialogDescription className="flex items-center gap-1 pt-1">
-                    <Users className="h-4 w-4" />
-                    {hackathon.organiser}
-                  </DialogDescription>
-                </DialogHeader>
-
-                <div className="space-y-4">
-                  <div>
-                    <h4 className="text-sm font-medium mb-1">Description</h4>
-                    <p className="text-sm text-muted-foreground">{hackathon.desc}</p>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <h4 className="text-sm font-medium mb-1">Date</h4>
-                      <p className="text-sm flex items-center gap-1">
-                        <Calendar className="h-4 w-4" />
-                        {formattedDate}
-                        {daysRemaining > 0 && (
-                          <span className={`ml-2 ${daysRemaining < 14 ? "text-destructive" : "text-muted-foreground"}`}>
-                            ({daysRemaining} days away)
-                          </span>
-                        )}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-medium mb-1">Location</h4>
-                      <p className="text-sm flex items-center gap-1">
-                        <MapPin className="h-4 w-4" />
-                        {hackathon.location}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-medium mb-1">Mode</h4>
-                      <p className="text-sm flex items-center gap-1">
-                        <Users className="h-4 w-4" />
-                        {hackathon.mode}
-                      </p>
-                    </div>
-
-                    <div>
-                      <h4 className="text-sm font-medium mb-1">Organiser</h4>
-                      <p className="text-sm">{hackathon.organiser}</p>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="text-sm font-medium mb-1">Sectors</h4>
-                    <div className="flex flex-wrap gap-1">
-                      {hackathon.sectorTags.map((tag) => (
-                        <Badge key={tag} variant="outline" className="text-xs">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <DialogFooter className="flex sm:justify-between gap-2">
-                  <Button
-                    variant={isReminderSet ? "outline" : "default"}
-                    className={isReminderSet ? "gap-1" : ""}
-                    onClick={toggleReminder}
-                  >
-                    {isReminderSet && <Check className="h-4 w-4" />}
-                    {isReminderSet ? "Reminder Set" : "Set Reminder"}
+              )}
+              
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    View Details
                   </Button>
-                  <DialogClose asChild>
-                    <Button variant="outline">Close</Button>
-                  </DialogClose>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogHeader>
+                    <DialogTitle>{hackathon.title}</DialogTitle>
+                    <DialogDescription className="flex items-center gap-1 pt-1">
+                      <Users className="h-4 w-4" />
+                      {hackathon.organiser}
+                    </DialogDescription>
+                  </DialogHeader>
+
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-sm font-medium mb-1">Description</h4>
+                      <p className="text-sm text-muted-foreground">{hackathon.desc}</p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <h4 className="text-sm font-medium mb-1">Date</h4>
+                        <p className="text-sm flex items-center gap-1">
+                          <Calendar className="h-4 w-4" />
+                          {formattedDate}
+                          {daysRemaining > 0 && (
+                            <span className={`ml-2 ${daysRemaining < 14 ? "text-destructive" : "text-muted-foreground"}`}>
+                              ({daysRemaining} days away)
+                            </span>
+                          )}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm font-medium mb-1">Location</h4>
+                        <p className="text-sm flex items-center gap-1">
+                          <MapPin className="h-4 w-4" />
+                          {hackathon.location}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm font-medium mb-1">Mode</h4>
+                        <p className="text-sm flex items-center gap-1">
+                          <Users className="h-4 w-4" />
+                          {hackathon.mode}
+                        </p>
+                      </div>
+
+                      <div>
+                        <h4 className="text-sm font-medium mb-1">Organiser</h4>
+                        <p className="text-sm">{hackathon.organiser}</p>
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="text-sm font-medium mb-1">Sectors</h4>
+                      <div className="flex flex-wrap gap-1">
+                        {hackathon.sectorTags.map((tag) => (
+                          <Badge key={tag} variant="outline" className="text-xs">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  <DialogFooter className="flex flex-wrap sm:justify-between gap-2">
+                    <div className="flex gap-2">
+                      <Button
+                        variant={isReminderSet ? "outline" : "default"}
+                        className={isReminderSet ? "gap-1" : ""}
+                        onClick={toggleReminder}
+                      >
+                        {isReminderSet && <Check className="h-4 w-4" />}
+                        {isReminderSet ? "Reminder Set" : "Set Reminder"}
+                      </Button>
+                      
+                      {hackathon.link && (
+                        <Button 
+                          variant="secondary"
+                          onClick={openLink}
+                        >
+                          Visit Website
+                        </Button>
+                      )}
+                    </div>
+                    
+                    <DialogClose asChild>
+                      <Button variant="outline">Close</Button>
+                    </DialogClose>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
           </div>
         </div>
       </CardContent>

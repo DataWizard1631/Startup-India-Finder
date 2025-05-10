@@ -43,15 +43,21 @@ export default function Dashboard() {
 
   // Apply both search query and filter query
   const filterItems = (items) => {
+    // Ensure items is an array
+    if (!Array.isArray(items)) {
+      console.error("Expected an array but received:", items)
+      return []
+    }
+
     // First apply global search query
     let filtered = items
     if (searchQuery) {
       const query = searchQuery.toLowerCase()
       filtered = items.filter(
         (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.desc.toLowerCase().includes(query) ||
-          item.sectorTags.some((tag) => tag.toLowerCase().includes(query))
+          (item?.title?.toLowerCase()?.includes(query) || false) ||
+          (item?.desc?.toLowerCase()?.includes(query) || false) ||
+          (item?.sectorTags?.some(tag => tag?.toLowerCase()?.includes(query)) || false)
       )
     }
     
@@ -60,23 +66,41 @@ export default function Dashboard() {
       const query = filterQuery.toLowerCase()
       filtered = filtered.filter(
         (item) =>
-          item.title.toLowerCase().includes(query) ||
-          item.sectorTags.some((tag) => tag.toLowerCase().includes(query))
+          (item?.title?.toLowerCase()?.includes(query) || false) ||
+          (item?.sectorTags?.some(tag => tag?.toLowerCase()?.includes(query)) || false)
       )
     }
     
     return filtered
   }
 
-  const filteredSchemes = filterItems(schemes)
-  const filteredHackathons = filterItems(hackathons)
+  // Ensure schemes and hackathons are arrays before filtering
+  const safeSchemes = Array.isArray(schemes) ? schemes : []
+  const safeHackathons = Array.isArray(hackathons) ? hackathons : []
+
+  const filteredSchemes = filterItems(safeSchemes)
+  const filteredHackathons = filterItems(safeHackathons)
 
   // Get top featured items
   const featuredSchemes = filteredSchemes.slice(0, 3)
   
   // Sort hackathons by date (upcoming first)
-  const upcomingHackathons = [...filteredHackathons]
-    .sort((a, b) => new Date(a.date) - new Date(b.date))
+  const upcomingHackathons = filteredHackathons
+    .sort((a, b) => {
+      try {
+        // Handle missing or invalid dates
+        const dateA = a?.date ? new Date(a.date) : new Date(0)
+        const dateB = b?.date ? new Date(b.date) : new Date(0)
+        
+        if (isNaN(dateA.getTime())) return 1
+        if (isNaN(dateB.getTime())) return -1
+        
+        return dateA - dateB
+      } catch (error) {
+        console.error("Error sorting dates:", error)
+        return 0
+      }
+    })
     .slice(0, 3)
     
   // Format date function
@@ -298,7 +322,7 @@ export default function Dashboard() {
                 </CardContent>
                 <CardFooter className="p-4 pt-0 flex justify-end items-center border-t mt-2">
                   <Button variant="outline" size="sm" className="gap-1" asChild>
-                    <a href={`/hackathons/${hackathon.id}`}>
+                    <a href={hackathon.link || "page not found"} target="_blank">
                       View Details
                       <ArrowRight className="h-3.5 w-3.5" />
                     </a>
