@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from "react"
 import { Calendar, List, Users, Filter } from "lucide-react"
-import HackathonCard from "@/components/HackathonCard"
-import CalendarView from "@/components/CalendarView"
-import FilterBar from "@/components/FilterBar"
+import HackathonCard from "@/components/hackathons/HackathonCard"
+import CalendarView from "@/components/hackathons/CalendarView"
+import FilterBar from "@/components/common/FilterBar"
 import { useSearchContext } from "@/context/SearchContext"
 import { useFilters } from "@/hooks/useFilters"
 import { Button } from "@/components/ui/button"

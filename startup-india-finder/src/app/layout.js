@@ -3,7 +3,7 @@ import "./globals.css"
 import Header from "@/components/layout/Header"
 import Footer from "@/components/layout/Footer"
 import BottomNav from "@/components/layout/BottomNav"
-import { ThemeProvider } from "@/components/theme-provider"
+import { ThemeProvider } from "@/components/layout/theme-provider"
 import { SearchProvider } from "@/context/SearchContext"
 import { Suspense } from "react"
 

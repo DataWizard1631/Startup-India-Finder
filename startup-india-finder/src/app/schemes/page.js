@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react"
 import { Filter, Award } from "lucide-react"
-import SchemeCard from "@/components/SchemeCard"
-import FilterBar from "@/components/FilterBar"
+import SchemeCard from "@/components/schemes/SchemeCard"
+import FilterBar from "@/components/common/FilterBar"
 import { useSearchContext } from "@/context/SearchContext"
 import { useFilters } from "@/hooks/useFilters"
 import { Button } from "@/components/ui/button"
