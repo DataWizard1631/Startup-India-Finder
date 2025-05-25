@@ -4,14 +4,14 @@
 ## 📌 About
 Startup India Finder is a web application designed to help users discover and explore startups registered under the Startup India initiative. The platform aggregates data from official sources, providing users with comprehensive information about various startups across India. Along with startup schemes it provides the information for Hackathons.
 
-## Features
+## ✅ Features
 
 - **Dashboard**: View featured schemes and upcoming hackathons
 - **Schemes**: Browse and filter government funding schemes
 - **Hackathons**: View hackathons in list or calendar view
 - **Profile**: Set interests, notification preferences, and track reminders
 
-## Tech Stack
+## 🔧 Tech Stack
 
 - Next.js 13 (App Router)
 - JavaScript/ Typescript
