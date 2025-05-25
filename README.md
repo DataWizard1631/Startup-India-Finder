@@ -10,16 +10,13 @@ Startup India Finder is a web application designed to help users discover and ex
 - **Schemes**: Browse and filter government funding schemes
 - **Hackathons**: View hackathons in list or calendar view
 - **Profile**: Set interests, notification preferences, and track reminders
-- **PWA Support**: Works offline with cached data
 
 ## Tech Stack
 
 - Next.js 13 (App Router)
-- JavaScript
+- JavaScript/ Typescript
 - Tailwind CSS
-- Lucide-react icons
-- next-pwa for offline support
-- shadcn/ui components
+- Lucide-react
 
 ## 🔧 Technologies & Tools
 
