@@ -28,7 +28,7 @@ Database Service: Manages interactions with MongoDB
 CI/CD: GitHub Actions for automated testing and deployment.
 Hosting: Vercel for frontend and backend deployment.: 
 
-### ⚙️ Service Point
+### ⚙️ Dashboard
 #### [Startup-India-Dashboard](startup-india-finder.vercel.app)
 
 ### ⚙️ Service Point
